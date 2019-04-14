@@ -12,19 +12,17 @@ import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
 @Component
 public class MailUtil {
 
-    @Autowired
-    private static JavaMailSender mailSender;
-
-    @Autowired
-    private static MessageSource messageSource;
-
-    @Value("${registration.mail.url:http://localhost:8081/register/activate?token=}")
     private static String url;
-
-    @Value("${registration.mail.enable:false}")
+    private static JavaMailSender mailSender;
+    private static MessageSource messageSource;
     private static boolean enabled;
 
-    private MailUtil() {
+    @Autowired
+    private MailUtil(JavaMailSender mailSender, MessageSource messageSource, @Value("${registration.mail.url:null}") String url, @Value("${registration.mail.enable:false}") boolean enabled) {
+        MailUtil.mailSender = mailSender;
+        MailUtil.messageSource = messageSource;
+        MailUtil.url = url;
+        MailUtil.enabled = enabled;
     }
 
     public static void sendActivationEmail(String email, String token) {

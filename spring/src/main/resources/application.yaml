@@ -4,7 +4,7 @@ spring:
     username: sa
     password: sa
   jpa:
-    show-sql: true
+    show-sql: false
     open-in-view: false
   h2:
     console:
@@ -39,4 +39,4 @@ captcha:
 registration:
   mail:
     enable: false
-    url: http://localhost:8081/register/activate?token=
+    url: http://localhost:8080/rest/register/activate?token=

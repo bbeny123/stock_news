@@ -15,20 +15,20 @@ import static org.beny.stock.exception.StockError.INTERNAL_SERVER_ERROR;
 @Component
 public class CaptchaUtil {
 
-    @Autowired
     private static RestTemplate restTemplate;
-
-    @Value("${captcha.url:null}")
     private static String url;
-
-    @Value("${captcha.site:null}")
     private static String site;
-
-    @Value("${captcha.secret:null}")
     private static String secret;
-
-    @Value("${captcha.enable:false}")
     private static boolean enabled;
+
+    @Autowired
+    private CaptchaUtil(RestTemplate restTemplate, @Value("${captcha.url:null}") String url, @Value("${captcha.site:null}") String site, @Value("${captcha.secret:null}") String secret, @Value("${captcha.enable:false}") boolean enabled) {
+        CaptchaUtil.restTemplate = restTemplate;
+        CaptchaUtil.url = url;
+        CaptchaUtil.site = site;
+        CaptchaUtil.secret = secret;
+        CaptchaUtil.enabled = enabled;
+    }
 
     public static void verifyCaptcha(String response) throws StockException {
         try {
