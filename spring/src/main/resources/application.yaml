@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+  jpa:
+    show-sql: true
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      transport:
+        protocol: smtp
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+oauth:
+  jwt:
+    key: stock
+  client:
+    id: stock
+    secret: stock
+  token:
+    validity: 86400
+captcha:
+  enable: false
+  url: https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={response}
+  secret:
+  site:
+registration:
+  mail:
+    enable: false
+    url: http://localhost:8081/register/activate?token=
