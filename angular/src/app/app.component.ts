@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RESTService} from "./services/rest.service";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,17 @@ import {RESTService} from "./services/rest.service";
 export class AppComponent {
 
   title: String;
+  isNavbarCollapsed = true;
 
-  constructor(private restService: RESTService) {
-    this.restService.login('a').subscribe(data => this.title = data.access_token);
+  constructor(private authService: AuthService) {
+    console.log('a');
+
+    authService.login('admin', 'admin').subscribe(data => {}, err => {
+      alert(err.status == 400 ? "Incorrect credentials!" : "Connection error!");
+    });
+
+    this.title = 'asd';
+    // authService.checkToken().subscribe(d => console.log(d));
   }
 
 

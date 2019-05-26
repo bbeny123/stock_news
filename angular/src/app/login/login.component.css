@@ -1,0 +1,19 @@
+.login-container {
+    text-align: right;
+    padding: 10px;
+    width: 100%;
+}
+
+.login-container input {
+    margin-left: 10px;
+    margin-right: 10px;
+    max-height: 42px;
+    padding: 8px;
+}
+
+.login-container button {
+    margin-right: 10px;
+    margin-top: 0px !important;
+    background-color: #eeeeee;
+    color: black;
+}
