@@ -12,14 +12,17 @@ public class ExceptionResponse {
     private int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
     private int stockCode = 500;
 
-    public ExceptionResponse(StockException ex) {
-        this.message = ex.getMessage();
-        this.code = ex.getHttpCode();
-        this.stockCode = ex.getErrorCode();
+    public static ExceptionResponse of(StockException ex) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.message = ex.getMessage();
+        response.code = ex.getHttpCode();
+        response.stockCode = ex.getErrorCode();
+        return response;
     }
 
-    public ExceptionResponse(MethodArgumentNotValidException ex) {
-        this.message = ex.getBindingResult()
+    public static ExceptionResponse of(MethodArgumentNotValidException ex) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.message = ex.getBindingResult()
                 .getAllErrors()
                 .stream()
                 .findFirst()
@@ -28,9 +31,12 @@ public class ExceptionResponse {
                         : "")
                         + e.getDefaultMessage())
                 .orElseGet(ex::getLocalizedMessage);
+        return response;
     }
 
-    public ExceptionResponse(Exception ex) {
-        this.message = ex.getMessage();
+    public static ExceptionResponse of(Exception ex) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.message = ex.getMessage();
+        return response;
     }
 }

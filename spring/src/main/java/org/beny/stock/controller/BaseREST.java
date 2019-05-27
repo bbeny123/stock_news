@@ -20,19 +20,19 @@ public abstract class BaseREST {
     @ExceptionHandler(StockException.class)
     public ResponseEntity<?> stockException(StockException ex) {
         logger.warn(ex.getMessage());
-        return ResponseEntity.status(ex.getHttpCode()).body(new ExceptionResponse(ex));
+        return ResponseEntity.status(ex.getHttpCode()).body(ExceptionResponse.of(ex));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> validException(MethodArgumentNotValidException ex) {
         logger.warn(ex.getMessage());
-        return ResponseEntity.status(BAD_REQUEST).body(new ExceptionResponse(ex));
+        return ResponseEntity.status(BAD_REQUEST).body(ExceptionResponse.of(ex));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> exception(Exception ex) {
         logger.warn(ex.getMessage());
-        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ExceptionResponse(ex));
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(ExceptionResponse.of(ex));
     }
 
     protected UserContext getContext() {

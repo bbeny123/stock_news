@@ -5,9 +5,11 @@ import org.beny.stock.exception.StockException;
 import org.beny.stock.repository.BaseRepository;
 import org.beny.stock.security.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.beny.stock.exception.StockError.FORBIDDEN;
 import static org.beny.stock.exception.StockError.ITEM_NOT_EXISTS;
@@ -18,25 +20,45 @@ public abstract class BaseService<T, U extends BaseRepository<T>> {
     private U repository;
 
     @Transactional
-    protected void save(T data) {
+    public void save(T data) {
         repository.save(data);
     }
 
     @Transactional
-    protected T saveAndFlush(T data) {
+    public T saveAndFlush(T data) {
         return repository.saveAndFlush(data);
     }
 
     @Transactional
-    protected void saveAdmin(UserContext ctx, T data) throws StockException {
+    public void saveAuthenticated(UserContext ctx, T data) throws StockException {
+        checkAuthenticated(ctx);
+        save(data);
+    }
+
+    @Transactional
+    public T saveAndFlushAuthenticated(UserContext ctx, T data) throws StockException {
+        checkAuthenticated(ctx);
+        return saveAndFlush(data);
+    }
+
+    @Transactional
+    public void saveAdmin(UserContext ctx, T data) throws StockException {
         checkAdmin(ctx);
         save(data);
     }
 
     @Transactional
-    protected T saveAndFlushAdmin(UserContext ctx, T data) throws StockException {
+    public T saveAndFlushAdmin(UserContext ctx, T data) throws StockException {
         checkAdmin(ctx);
         return saveAndFlush(data);
+    }
+
+    public List<T> findAll(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size)).getContent();
+    }
+
+    public Stream<T> findAllStream(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size)).get();
     }
 
     public List<T> findAll() {
@@ -56,6 +78,12 @@ public abstract class BaseService<T, U extends BaseRepository<T>> {
     public T findOneAdmin(UserContext ctx, Long id) throws StockException {
         checkAdmin(ctx);
         return findOne(id);
+    }
+
+    protected void checkAuthenticated(UserContext ctx) throws StockException {
+        if (!ctx.isAuthenticated()) {
+            throw FORBIDDEN.exception();
+        }
     }
 
     protected void checkAdmin(UserContext ctx) throws StockException {
