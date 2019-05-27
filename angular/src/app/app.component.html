@@ -3,8 +3,8 @@
     <a class="navbar-brand" routerLink="/" (click)="isNavbarCollapsed = true">
       <img src="/assets/logo.png" width="30" height="30" alt="Stock News">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            (click)="isNavbarCollapsed = !isNavbarCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarCollapse">
@@ -13,14 +13,36 @@
           <a class="nav-link" routerLink="/create" routerLinkActive="active" (click)="isNavbarCollapsed = true">Add News</a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="isNavbarCollapsed = true">Sign In</a>
+      <ul class="navbar-nav ml-auto" [ngSwitch]="authService.loggedIn()">
+        <li class="nav-item" *ngSwitchCase="true">
+          <a class="nav-link pointer" (click)="authService.logout()">Sign Out</a>
+        </li>
+        <li class="nav-item" *ngSwitchCase="false">
+          <div ngbDropdown class="d-inline-block">
+            <a class="nav-link" ngbDropdownToggle>Sign In</a>
+            <div ngbDropdownMenu>
+              <form class="px-4 py-6" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                  <label for="login">Login</label>
+                  <input type="text" class="form-control" id="login" formControlName="login" placeholder="Login" required maxlength="30" autocomplete="true">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password" required maxlength="255">
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Sign in</button>
+              </form>
+              <div class="dropdown-divider"></div>
+              <button ngbDropdownItem>New around here? Sign up!</button>
+              <button ngbDropdownItem>Forgot password?</button>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
 <div class="centered">
   <router-outlet></router-outlet>
 </div>

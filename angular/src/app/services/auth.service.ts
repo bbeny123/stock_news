@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AppConfig} from "../app-config";
 import {tap} from "rxjs/operators";
+import {User} from "../model/user";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  login(login, password: string) {
+  login(user: User) {
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -19,8 +21,8 @@ export class AuthService {
     };
 
     const params = new HttpParams()
-      .set('username', login)
-      .set('password', password)
+      .set('username', user.login)
+      .set('password', user.password)
       .set('grant_type', 'password')
       .set(' client_id', 'stock');
 
@@ -29,15 +31,13 @@ export class AuthService {
     );
   }
 
-  checkToken() {
-    const options = {
-      headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
-    };
+  logout() {
+    localStorage.removeItem("token");
+    this.router.navigate(['/']);
+  }
 
-    const params = new HttpParams()
-      .set('token', localStorage.getItem('token'));
-
-    return this.http.post(AppConfig.ENDPOINT_OAUTH_CHECK, params, options);
+  loggedIn() {
+    return localStorage.getItem('token') !== null;
   }
 
 }
