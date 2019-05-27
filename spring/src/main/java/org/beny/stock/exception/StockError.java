@@ -1,10 +1,7 @@
 package org.beny.stock.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-@AllArgsConstructor
 public enum StockError {
 
     FORBIDDEN(0, "Forbidden", HttpStatus.FORBIDDEN),
@@ -20,17 +17,31 @@ public enum StockError {
 
     INTERNAL_SERVER_ERROR(500, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
-    @Getter
     private int code;
 
-    @Getter
     private String message;
 
-    @Getter
     private HttpStatus httpStatus;
+
+    StockError(int code, String message, HttpStatus httpStatus) {
+        this.code = code;
+        this.message = message;
+        this.httpStatus = httpStatus;
+    }
 
     public StockException exception() {
         return new StockException(this);
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
 }
