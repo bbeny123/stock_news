@@ -1,16 +1,10 @@
 package org.beny.stock.dto.news;
 
-import org.beny.stock.dto.comment.CommentListItem;
 import org.beny.stock.model.News;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-import static java.util.Comparator.comparingLong;
-import static java.util.stream.Collectors.toList;
-
-public class NewsDetails {
+public class NewsListItem {
 
     private Long id;
     private String title;
@@ -18,7 +12,6 @@ public class NewsDetails {
     private String link;
     private LocalDateTime date;
     private String user;
-    private List<CommentListItem> comments;
 
     public Long getId() {
         return id;
@@ -68,29 +61,14 @@ public class NewsDetails {
         this.user = user;
     }
 
-    public List<CommentListItem> getComments() {
-        if (comments == null) {
-            comments = new ArrayList<>();
-        }
-        return comments;
-    }
-
-    public void setComments(List<CommentListItem> comments) {
-        this.comments = comments;
-    }
-
-    public static NewsDetails of(News news) {
-        NewsDetails details = new NewsDetails();
+    public static NewsListItem of(News news) {
+        NewsListItem details = new NewsListItem();
         details.id = news.getId();
         details.title = news.getTitle();
         details.description = news.getDescription();
         details.link = news.getLink();
         details.date = news.getDate();
         details.user = news.getUser().getLogin();
-        details.comments = news.getComments().stream()
-                .map(CommentListItem::of)
-                .sorted(comparingLong(CommentListItem::getId))
-                .collect(toList());
         return details;
     }
 

@@ -1,7 +1,7 @@
 package org.beny.stock.security;
 
 import org.beny.stock.exception.StockException;
-import org.beny.stock.service.UserService;
+import org.beny.stock.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -19,7 +19,7 @@ import static org.beny.stock.exception.StockError.INTERNAL_SERVER_ERROR;
 public class TokenConverter extends JwtAccessTokenConverter {
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     public TokenConverter(@Value("${oauth.jwt.key:jwtKey}") String jwtKey) {
@@ -45,7 +45,7 @@ public class TokenConverter extends JwtAccessTokenConverter {
         OAuth2Authentication authentication = super.extractAuthentication(claims);
 
         try {
-            authentication = new OAuth2Authentication(authentication.getOAuth2Request(), new UserContext(userService.findByLogin((String) claims.get("user_name")), "N/A"));
+            authentication = new OAuth2Authentication(authentication.getOAuth2Request(), new UserContext(userRepository.findByLogin((String) claims.get("user_name")), "N/A"));
         } catch (Exception ex) {
             throw INTERNAL_SERVER_ERROR.exception();
         }

@@ -4,7 +4,7 @@ import org.beny.stock.model.Comment;
 
 import java.time.LocalDateTime;
 
-public class CommentList {
+public class CommentListItem {
 
     private Long id;
     private String content;
@@ -43,8 +43,8 @@ public class CommentList {
         this.user = user;
     }
 
-    public static CommentList of(Comment comment) {
-        CommentList item = new CommentList();
+    public static CommentListItem of(Comment comment) {
+        CommentListItem item = new CommentListItem();
         item.id = comment.getId();
         item.content = comment.getContent();
         item.date = comment.getDate();

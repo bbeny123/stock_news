@@ -1,75 +1,50 @@
 package org.beny.stock.dto.news;
 
 import org.beny.stock.model.News;
+import org.springframework.data.domain.Page;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewsList {
 
-    private Long id;
-    private String title;
-    private String description;
-    private String link;
-    private LocalDateTime date;
-    private String user;
+    private List<NewsListItem> items;
+    private long totalItems;
+    private long totalPages;
 
-    public Long getId() {
-        return id;
+    public List<NewsListItem> getItems() {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        return items;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setItems(List<NewsListItem> items) {
+        this.items = items;
     }
 
-    public String getTitle() {
-        return title;
+    public long getTotalItems() {
+        return totalItems;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTotalItems(long totalItems) {
+        this.totalItems = totalItems;
     }
 
-    public String getDescription() {
-        return description;
+    public long getTotalPages() {
+        return totalPages;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTotalPages(long totalPages) {
+        this.totalPages = totalPages;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public static NewsList of(News news) {
-        NewsList details = new NewsList();
-        details.id = news.getId();
-        details.title = news.getTitle();
-        details.description = news.getDescription();
-        details.link = news.getLink();
-        details.date = news.getDate();
-        details.user = news.getUser().getLogin();
-        return details;
+    public static NewsList of(Page<News> news) {
+        NewsList list = new NewsList();
+        list.items = news.map(NewsListItem::of).getContent();
+        list.totalItems = news.getTotalElements();
+        list.totalPages = news.getTotalPages();
+        return list;
     }
 
 }
