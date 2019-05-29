@@ -21,6 +21,7 @@
           <div ngbDropdown autoClose="outside" class="d-inline-block">
             <a class="nav-link pointer" (click)="authTooltip = 1" ngbDropdownToggle>Sign In</a>
             <div ngbDropdownMenu>
+              <div [ngBusy]="busy"></div>
               <div [hidden]="authTooltip !== 1">
                 <form class="px-4 py-6" [formGroup]="userForm" (ngSubmit)="onSubmitLogin()">
                   <div class="form-group">

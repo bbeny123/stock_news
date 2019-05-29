@@ -3,6 +3,7 @@ import {AuthService} from "./services/auth.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MustMatch} from "./util/must-match.validator";
 import {AppConfig} from "./app-config";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
   resendForm: FormGroup;
   isNavbarCollapsed = true;
   authTooltip = 1;
+  busy: Subscription;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) {
   }
@@ -48,7 +50,7 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.userForm.value).subscribe(data => {
+    this.busy = this.authService.login(this.userForm.value).subscribe(data => {
       },
       err => {
         alert(err.message);
@@ -61,7 +63,7 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.authService.registration(this.registerForm.value).subscribe(data => {
+    this.busy = this.authService.registration(this.registerForm.value).subscribe(data => {
         this.authTooltip = 1;
       },
       err => {
@@ -75,7 +77,7 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.authService.resend(this.resendForm.value).subscribe(data => {
+    this.busy = this.authService.resend(this.resendForm.value).subscribe(data => {
       this.authTooltip = 1;
     }, err => {
       alert(err.error.message);
