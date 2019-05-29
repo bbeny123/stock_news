@@ -15,14 +15,17 @@
       </ul>
       <ul class="navbar-nav ml-auto" [ngSwitch]="authService.loggedIn()">
         <li class="nav-item" *ngSwitchCase="true">
-          <a class="nav-link pointer" (click)="authService.logout()">Sign Out</a>
+          <a class="nav-link pointer" (click)="logout()">Sign Out</a>
         </li>
         <li class="nav-item" *ngSwitchCase="false">
           <div ngbDropdown autoClose="outside" class="d-inline-block">
-            <a class="nav-link pointer" (click)="authTooltip = 1" ngbDropdownToggle>Sign In</a>
+            <a #submenuElem class="nav-link pointer" (click)="submenu = 1; resetAlertsSubmenu();" ngbDropdownToggle>Sign In</a>
             <div ngbDropdownMenu>
               <div [ngBusy]="busy"></div>
-              <div [hidden]="authTooltip !== 1">
+              <p *ngFor="let alert of alertsSubmenu">
+                <ngb-alert [type]="alert.type" (close)="closeAlertSubmenu(alert)">{{ alert.message }}</ngb-alert>
+              </p>
+              <div [hidden]="submenu !== 1">
                 <form class="px-4 py-6" [formGroup]="userForm" (ngSubmit)="onSubmitLogin()">
                   <div class="form-group">
                     <label for="login">Login</label>
@@ -32,12 +35,12 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password" maxlength="255" required>
                   </div>
-                  <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Sign in</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid" (click)="resetAlertsSubmenu();">Sign in</button>
                 </form>
                 <div class="dropdown-divider"></div>
-                <button ngbDropdownItem (click)="authTooltip = 2; resetCaptcha()">New around here? Sign up</button>
+                <button ngbDropdownItem (click)="submenu = 2; resetCaptcha(); resetAlertsSubmenu();">New around here? Sign up</button>
               </div>
-              <div [hidden]="authTooltip !== 2">
+              <div [hidden]="submenu !== 2">
                 <form class="px-4 py-6" [formGroup]="registerForm" (ngSubmit)="onSubmitRegistration()">
                   <div class="form-group">
                     <label for="registration_login">Login</label>
@@ -59,24 +62,24 @@
                     <label for="registration_name">Name</label>
                     <input type="text" class="form-control" id="registration_name" formControlName="name" placeholder="Name" maxlength="120">
                   </div>
-                  <ngx-recaptcha2 class="captcha" [siteKey]="siteKey" formControlName="captchaResponse"></ngx-recaptcha2>
-                  <button type="submit" class="btn btn-primary mt-2" [disabled]="registerForm.invalid">Sign up</button>
+                  <ngx-recaptcha2 #captchaElem class="captcha" [siteKey]="siteKey" formControlName="captchaResponse"></ngx-recaptcha2>
+                  <button type="submit" class="btn btn-primary mt-2" [disabled]="registerForm.invalid" (click)="resetAlertsSubmenu();">Sign up</button>
                 </form>
                 <div class="dropdown-divider"></div>
-                <button ngbDropdownItem (click)="authTooltip = 1">Already have an account? Sign in</button>
-                <button ngbDropdownItem (click)="authTooltip = 3">Resend activation link</button>
+                <button ngbDropdownItem (click)="submenu = 1; resetAlertsSubmenu();">Already have an account? Sign in</button>
+                <button ngbDropdownItem (click)="submenu = 3; resetAlertsSubmenu();">Resend activation link</button>
               </div>
-              <div [hidden]="authTooltip !== 3">
+              <div [hidden]="submenu !== 3">
                 <form class="px-4 py-6" [formGroup]="resendForm" (ngSubmit)="onSubmitResend()">
                   <div class="form-group">
                     <label for="resend_email">Email</label>
                     <input type="email" class="form-control" id="resend_email" formControlName="email" placeholder="Email" maxlength="60" required>
                   </div>
-                  <button type="submit" class="btn btn-primary" [disabled]="resendForm.invalid">Resend</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="resendForm.invalid" (click)="resetAlertsSubmenu();">Resend</button>
                 </form>
                 <div class="dropdown-divider"></div>
-                <button ngbDropdownItem (click)="authTooltip = 1; resetCaptcha()">Already have an account? Sign in</button>
-                <button ngbDropdownItem (click)="authTooltip = 2">New around here? Sign up</button>
+                <button ngbDropdownItem (click)="submenu = 1; resetCaptcha(); resetAlertsSubmenu();">Already have an account? Sign in</button>
+                <button ngbDropdownItem (click)="submenu = 2; resetAlertsSubmenu();">New around here? Sign up</button>
               </div>
             </div>
           </div>
@@ -86,6 +89,9 @@
   </div>
 </nav>
 
-<div class="centered">
+<div class="centered mt-2">
+  <p *ngFor="let alert of alerts">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </p>
   <router-outlet></router-outlet>
 </div>
