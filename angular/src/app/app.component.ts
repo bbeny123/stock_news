@@ -4,8 +4,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MustMatch} from "./util/must-match.validator";
 import {AppConfig} from "./app-config";
 import {Subscription} from "rxjs";
-import {Alert} from "./model/alert";
 import {ReCaptcha2Component} from "ngx-captcha";
+import {AlertService} from "./services/alert.service";
 
 @Component({
   selector: 'app-root',
@@ -23,10 +23,8 @@ export class AppComponent implements OnInit {
   isNavbarCollapsed = true;
   submenu = 1;
   busy: Subscription;
-  alerts: Alert[] = [];
-  alertsSubmenu: Alert[] = [];
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private authService: AuthService, private alertService: AlertService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -58,13 +56,11 @@ export class AppComponent implements OnInit {
 
     this.busy = this.authService.login(this.userForm.value).subscribe(() => {
         this.reset();
-        this.alerts = [Alert.success('You have successfully logged in. Hello!')];
+        this.alertService.success('You have successfully logged in. Hello!');
       },
       err => {
-        this.alertsSubmenu.push(Alert.warning(err.status == 400 ? "Incorrect credentials!" : "Connection error!"));
+        this.alertService.warningSubmenu(err.status == 400 ? "Incorrect credentials!" : "Connection error!");
       });
-
-    console.log(this.alertsSubmenu);
   }
 
   onSubmitRegistration() {
@@ -74,12 +70,12 @@ export class AppComponent implements OnInit {
 
     this.busy = this.authService.registration(this.registerForm.value).subscribe(() => {
         this.submenuRef.nativeElement.click();
-        this.alerts = [Alert.success('You have successfully registered. You must confirm your email address before you can log in.')];
+        this.alertService.success('You have successfully registered. You must confirm your email address before you can log in.');
       },
       err => {
         this.resetCaptcha();
         this.captchaElem.reloadCaptcha();
-        this.alertsSubmenu.push(Alert.warning(err.error.message));
+        this.alertService.warningSubmenu(err.error.message);
       }
     );
   }
@@ -91,15 +87,15 @@ export class AppComponent implements OnInit {
 
     this.busy = this.authService.resend(this.resendForm.value).subscribe(() => {
       this.submenuRef.nativeElement.click();
-      this.alerts = [Alert.success('An email with the activation link has been resend.')];
+      this.alertService.success('An email with the activation link has been resend.');
     }, err => {
-      this.alertsSubmenu.push(Alert.warning(err.error.message));
+      this.alertService.warningSubmenu(err.error.message);
     });
   }
 
   logout() {
     this.authService.logout();
-    this.alerts = [Alert.success('You have successfully logged out. See you soon!')];
+    this.alertService.success('You have successfully logged out. See you soon!');
   }
 
   reset() {
@@ -110,22 +106,6 @@ export class AppComponent implements OnInit {
 
   resetCaptcha() {
     this.registerForm.patchValue({captchaResponse: ''});
-  }
-
-  closeAlert(alert: Alert) {
-    this.alerts.splice(this.alerts.indexOf(alert), 1);
-  }
-
-  closeAlertSubmenu(alert: Alert) {
-    this.alertsSubmenu.splice(this.alertsSubmenu.indexOf(alert), 1);
-  }
-
-  resetAlerts() {
-    this.alerts = [];
-  }
-
-  resetAlertsSubmenu() {
-    this.alertsSubmenu = [];
   }
 
 }
