@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import static java.util.UUID.randomUUID;
 import static org.beny.stock.exception.StockError.*;
-import static org.beny.stock.util.MailUtil.sendActivationEmail;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -26,6 +25,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public UserContext loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -43,7 +45,7 @@ public class UserService implements UserDetailsService {
         user.setStringToken(randomUUID().toString());
         user = repository.save(user);
 
-        sendActivationEmail(user.getEmail(), user.getToken().getToken());
+        mailService.sendActivationEmail(user.getEmail(), user.getToken().getToken());
     }
 
     public void resendToken(String email) throws StockException {
@@ -57,7 +59,7 @@ public class UserService implements UserDetailsService {
         user.setStringToken(randomUUID().toString());
         user = repository.save(user);
 
-        sendActivationEmail(user.getEmail(), user.getToken().getToken());
+        mailService.sendActivationEmail(user.getEmail(), user.getToken().getToken());
     }
 
     public void activate(String token) {
