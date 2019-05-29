@@ -28,7 +28,7 @@ export class AuthService {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Basic ' + btoa("stock:stock")
-      }),
+      })
     };
 
     const body = new HttpParams()
@@ -46,17 +46,28 @@ export class AuthService {
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
-      }),
+      })
     };
 
     return this.http.post<any>(AppConfig.ENDPOINT_REGISTRATION, user, options);
+  }
+
+  activate(token: string) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      params: new HttpParams().set('token', token)
+    };
+
+    return this.http.get<any>(AppConfig.ENDPOINT_ACTIVATE, options);
   }
 
   resend(user: UserResend) {
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
-      }),
+      })
     };
 
     return this.http.post<any>(AppConfig.ENDPOINT_RESEND, user, options);

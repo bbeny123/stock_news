@@ -6,5 +6,6 @@ export class AppConfig {
   public static ENDPOINT_OAUTH = AppConfig.ENDPOINT_API + '/oauth/token';
   public static ENDPOINT_REGISTRATION = AppConfig.ENDPOINT_API + '/rest/register';
   public static ENDPOINT_RESEND = AppConfig.ENDPOINT_API + '/rest/register/resend';
+  public static ENDPOINT_ACTIVATE = AppConfig.ENDPOINT_API + '/rest/register/activate';
 
 }

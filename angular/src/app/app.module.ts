@@ -11,11 +11,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxCaptchaModule} from "ngx-captcha";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgBusyModule} from "ng-busy";
+import { ResendComponent } from './resend/resend.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ResendComponent
   ],
   imports: [
     BrowserModule,

@@ -51,10 +51,10 @@ export class AppComponent implements OnInit {
     }
 
     this.busy = this.authService.login(this.userForm.value).subscribe(data => {
+        this.reset();
       },
       err => {
-        alert(err.message);
-        // alert(err.status == 400 ? "Incorrect credentials!" : "Connection error!");
+        alert(err.status == 400 ? "Incorrect credentials!" : "Connection error!");
       });
   }
 
@@ -85,6 +85,12 @@ export class AppComponent implements OnInit {
   }
 
   reset() {
+    this.userForm.reset();
+    this.registerForm.reset();
+    this.resendForm.reset();
+  }
+
+  resetCaptcha() {
     this.registerForm.patchValue({captchaResponse: ''});
   }
 
