@@ -10,6 +10,7 @@ public class CommentListItem {
     private String content;
     private LocalDateTime date;
     private String user;
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -49,6 +50,7 @@ public class CommentListItem {
         item.content = comment.getContent();
         item.date = comment.getDate();
         item.user = comment.getUser().getLogin();
+        item.userId = comment.getUser().getId();
         return item;
     }
 

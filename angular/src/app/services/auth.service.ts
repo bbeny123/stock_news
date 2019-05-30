@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AppConfig} from "../app-config";
 import {tap} from "rxjs/operators";
-import {UserLogin} from "../model/userLogin";
+import {UserLogin} from "../model/user-login";
 import {Router} from "@angular/router";
-import {UserRegistration} from "../model/userRegistration";
-import {UserResend} from "../model/userResend";
+import {UserRegistration} from "../model/user-registration";
+import {UserResend} from "../model/user-resend";
 
 @Injectable({
   providedIn: 'root'

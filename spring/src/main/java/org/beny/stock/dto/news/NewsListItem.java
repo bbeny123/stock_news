@@ -12,6 +12,7 @@ public class NewsListItem {
     private String link;
     private LocalDateTime date;
     private String user;
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -61,15 +62,24 @@ public class NewsListItem {
         this.user = user;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public static NewsListItem of(News news) {
-        NewsListItem details = new NewsListItem();
-        details.id = news.getId();
-        details.title = news.getTitle();
-        details.description = news.getDescription();
-        details.link = news.getLink();
-        details.date = news.getDate();
-        details.user = news.getUser().getLogin();
-        return details;
+        NewsListItem item = new NewsListItem();
+        item.id = news.getId();
+        item.title = news.getTitle();
+        item.description = news.getDescription();
+        item.link = news.getLink();
+        item.date = news.getDate();
+        item.user = news.getUser().getLogin();
+        item.userId = news.getUser().getId();
+        return item;
     }
 
 }

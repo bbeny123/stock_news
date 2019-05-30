@@ -18,6 +18,7 @@ public class NewsDetails {
     private String link;
     private LocalDateTime date;
     private String user;
+    private Long userId;
     private List<CommentListItem> comments;
 
     public Long getId() {
@@ -68,6 +69,14 @@ public class NewsDetails {
         this.user = user;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public List<CommentListItem> getComments() {
         if (comments == null) {
             comments = new ArrayList<>();
@@ -87,6 +96,7 @@ public class NewsDetails {
         details.link = news.getLink();
         details.date = news.getDate();
         details.user = news.getUser().getLogin();
+        details.userId = news.getUser().getId();
         details.comments = news.getComments().stream()
                 .map(CommentListItem::of)
                 .sorted(comparingLong(CommentListItem::getId))

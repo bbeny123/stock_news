@@ -5,19 +5,19 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ErrorInterceptor} from "./error/error-interceptor";
-import {LoginComponent} from "./login/login.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxCaptchaModule} from "ngx-captcha";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgBusyModule} from "ng-busy";
-import { ResendComponent } from './resend/resend.component';
+import {ResendComponent} from './resend/resend.component';
+import {ShortUrlPipe} from './util/short-url.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    ResendComponent
+    ResendComponent,
+    ShortUrlPipe
   ],
   imports: [
     BrowserModule,
