@@ -1,9 +1,9 @@
-import {News} from "./news";
+import {News} from './news';
 
 export interface NewsList {
 
   items: News[];
   totalItems: number;
   totalPages: number;
-  
+
 }

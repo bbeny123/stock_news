@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {News} from "../model/news";
-import {RESTService} from "../services/rest.service";
-import {AlertService} from "../services/alert.service";
+import {News} from '../model/news';
+import {RESTService} from '../services/rest.service';
+import {AlertService} from '../services/alert.service';
 
 @Component({
   selector: 'app-news',
@@ -12,7 +12,7 @@ export class NewsComponent implements OnInit {
 
   page = 1;
   size = 0;
-  newses: News[]= [];
+  newses: News[] = [];
 
   constructor(private restService: RESTService, private alertService: AlertService) { }
 

@@ -1,4 +1,4 @@
-import {Comment} from "./comment";
+import {Comment} from './comment';
 
 export interface News {
 
@@ -7,7 +7,7 @@ export interface News {
   description: string;
   link: string;
   user: string;
-  userId: number
+  userId: number;
   comments: Comment[];
 
 }

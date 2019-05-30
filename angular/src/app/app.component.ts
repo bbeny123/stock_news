@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from "./services/auth.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MustMatch} from "./util/must-match.validator";
-import {AppConfig} from "./app-config";
-import {Subscription} from "rxjs";
-import {ReCaptcha2Component} from "ngx-captcha";
-import {AlertService} from "./services/alert.service";
+import {AuthService} from './services/auth.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MustMatch} from './util/must-match.validator';
+import {AppConfig} from './app-config';
+import {Subscription} from 'rxjs';
+import {ReCaptcha2Component} from 'ngx-captcha';
+import {AlertService} from './services/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
         this.alertService.success('You have successfully logged in. Hello!');
       },
       err => {
-        this.alertService.warningSubmenu(err.status == 400 ? "Incorrect credentials!" : "Connection error!");
+        this.alertService.warningSubmenu(err.status == 400 ? 'Incorrect credentials!' : 'Connection error!');
       });
   }
 

@@ -11,8 +11,9 @@ export class ShortUrlPipe implements PipeTransform {
       let match;
       if (match = url.match(/^(?:https?:\/\/)?(?:www\.)?([^:\/\n?=]+)/im)) {
         result = match[1];
-        if (match = result.match(/^[^.]+\.(.+\..+)$/))
+        if (match = result.match(/^[^.]+\.(.+\..+)$/)) {
           result = match[1];
+        }
       }
       return result;
     }

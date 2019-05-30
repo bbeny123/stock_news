@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ResendComponent} from "./resend/resend.component";
-import {NewsComponent} from "./news/news.component";
+import {ResendComponent} from './resend/resend.component';
+import {NewsComponent} from './news/news.component';
 
 const routes: Routes = [
   {

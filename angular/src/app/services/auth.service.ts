@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {AppConfig} from "../app-config";
-import {tap} from "rxjs/operators";
-import {UserLogin} from "../model/user-login";
-import {Router} from "@angular/router";
-import {UserRegistration} from "../model/user-registration";
-import {UserResend} from "../model/user-resend";
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {AppConfig} from '../app-config';
+import {tap} from 'rxjs/operators';
+import {UserLogin} from '../model/user-login';
+import {Router} from '@angular/router';
+import {UserRegistration} from '../model/user-registration';
+import {UserResend} from '../model/user-resend';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     this.router.navigate(['/']);
   }
 
@@ -35,7 +35,7 @@ export class AuthService {
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + btoa("stock:stock")
+        Authorization: 'Basic ' + btoa('stock:stock')
       })
     };
 
