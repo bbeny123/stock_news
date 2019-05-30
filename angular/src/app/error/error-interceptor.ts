@@ -12,8 +12,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status == 401) {
+        if (err.status === 401) {
+          err.error.message = 'Unauthorized Access - Please login';
           this.router.navigate(['/login']);
+        } else if (!err.error.message) {
+          err.error.message = err.message;
         }
         return throwError(err);
       })

@@ -36,12 +36,6 @@ public class News {
     @OneToMany(mappedBy = "news", cascade = ALL, orphanRemoval = true)
     private Set<Comment> comments;
 
-    @PrePersist
-    @PreUpdate
-    protected void prePersistOrUpdate() {
-        comments.forEach(c -> c.setNews(this));
-    }
-
     public Long getId() {
         return id;
     }
@@ -95,6 +89,11 @@ public class News {
             comments = new HashSet<>();
         }
         return comments;
+    }
+
+    public void addComment(Comment comment) {
+        comment.setNews(this);
+        getComments().add(comment);
     }
 
     public void setComments(Set<Comment> comments) {

@@ -23,7 +23,7 @@ public class CommentService {
 
     public Comment create(Comment comment, Long newsId) throws StockException {
         News news = newsRepository.findOneById(newsId);
-        news.getComments().add(comment);
+        news.addComment(comment);
         newsRepository.save(news);
         return comment;
     }

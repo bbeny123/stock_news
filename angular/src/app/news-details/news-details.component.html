@@ -1,8 +1,31 @@
-<div class="border rounded-sm shadow p-3 mb-4 news">
-  <h4 class="font-weight-bold">{{news.title}}!</h4>
+<div class="border rounded-sm shadow p-3 mb-4">
+  <h4 class="font-weight-bold">{{news && news.title}}</h4>
   <div class="row">
-    <p class="text-secondary col-auto mr-0 mb-1">@{{news.user}}</p>
-    <a class="text-secondary col-auto mr-auto" [href]="news.link">{{news.link | shortUrl}}</a>
+    <p class="text-secondary col-auto mr-0 mb-1">@{{news && news.user}}</p>
+    <a class="text-secondary col-auto mr-auto" [href]="news && news.link">{{news && news.link | shortUrl}}</a>
   </div>
-  <p class="mb-1">{{news.description}}</p>
+  <p class="mb-1">{{news && news.description}}</p>
+</div>
+
+<div class="pb-2" *ngIf="!error">
+  <h5 class="font-weight-bold">Comments ({{news && news.comments ? news.comments.length : 0}}):</h5>
+
+  <div class="" *ngFor="let cmt of news && news.comments">
+    <div *ngIf="authService.isOwner(cmt.id)" class="border rounded-sm shadow p-3 mb-4 owner">
+      <p class="text-secondary mb-1">@{{cmt.user}}:</p>
+      <p class="mb-1">{{cmt.content}}</p>
+    </div>
+    <div *ngIf="!authService.isOwner(cmt.id)" class="border rounded-sm shadow p-3 mb-4">
+      <p class="text-secondary mb-1">@{{cmt.user}}:</p>
+      <p class="mb-1">{{cmt.content}}</p>
+    </div>
+  </div>
+
+  <form class="" *ngIf="authService.loggedIn()" [formGroup]="cmtForm" (ngSubmit)="addComment()">
+    <div class="form-group">
+      <label class="font-weight-bold" for="comment">Comment:</label>
+      <textarea class="border new rounded-sm shadow p-3 mb-4 form-control" id="comment" formControlName="content" rows="1" placeholder="What are your thoughts?"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mb-3 float-right" [disabled]="cmtForm.invalid">Comment</button>
+  </form>
 </div>

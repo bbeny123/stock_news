@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   loggedIn() {
-    return localStorage.getItem('token') !== null;
+    return localStorage.getItem('token') != null;
   }
 
   isAdmin() {
@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   isOwner(id: number) {
-    return this.isAdmin() || JSON.parse(localStorage.getItem('token')).userId === id;
+    return this.isAdmin() || this.loggedIn() && JSON.parse(localStorage.getItem('token')).userId === id;
   }
 
   login(user: UserLogin) {
