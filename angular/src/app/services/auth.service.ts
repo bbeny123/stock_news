@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AppConfig} from "../app-config";
 import {tap} from "rxjs/operators";
@@ -23,6 +23,14 @@ export class AuthService {
     return localStorage.getItem('token') !== null;
   }
 
+  isAdmin() {
+    return this.loggedIn() && JSON.parse(localStorage.getItem('token')).role === 'ADMIN';
+  }
+
+  isOwner(id: number) {
+    return this.isAdmin() || JSON.parse(localStorage.getItem('token')).userId === id;
+  }
+
   login(user: UserLogin) {
     const options = {
       headers: new HttpHeaders({
@@ -38,7 +46,7 @@ export class AuthService {
       .set(' client_id', 'stock');
 
     return this.http.post<any>(AppConfig.ENDPOINT_OAUTH, body, options).pipe(
-      tap(t => localStorage.setItem('token', t.access_token))
+      tap(t => localStorage.setItem('token', JSON.stringify({token: t.access_token, role: t.type, userId: t.userId})))
     );
   }
 
