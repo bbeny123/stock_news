@@ -5,7 +5,7 @@
     <a class="text-secondary col-auto mr-auto" [href]="news && news.link">{{news && news.link | shortUrl}}</a>
   </div>
   <p class="mb-1">{{news && news.description}}</p>
-  <div class="text-right">
+  <div *ngIf="authService.isOwner(news.userId)" class="text-right">
     <button class="btn btn-primary mr-2" (click)="edit(news)">Edit</button>
     <button class="btn btn-danger" (click)="remove(news)">Remove</button>
   </div>

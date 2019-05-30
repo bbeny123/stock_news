@@ -12,11 +12,9 @@ import {NewsRequest} from "../model/news-request";
 })
 export class RESTService {
 
-  private token = localStorage.getItem('token');
   private options = {
     headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': this.token != null ? 'Bearer ' + JSON.parse(this.token).token : ''
+        'Content-Type': 'application/json'
       }
     )
   };
@@ -25,7 +23,7 @@ export class RESTService {
 
   getNewsList(page: number = 1) {
     const options = {
-      headers: this.options.headers,
+      headers: this.getOptions().headers,
       params: new HttpParams().set('page', (page - 1) + '')
     };
 
@@ -33,7 +31,7 @@ export class RESTService {
   }
 
   getNews(id: string) {
-    return this.http.get<News>(AppConfig.ENDPOINT_NEWS + "/" + id, this.options);
+    return this.http.get<News>(AppConfig.ENDPOINT_NEWS + "/" + id, this.getOptions());
   }
 
   createOrUpdateNews(news: NewsRequest, id?: string) {
@@ -41,23 +39,28 @@ export class RESTService {
   }
 
   createNews(news: NewsRequest) {
-    return this.http.post<News>(AppConfig.ENDPOINT_NEWS, news, this.options);
+    return this.http.post<News>(AppConfig.ENDPOINT_NEWS, news, this.getOptions());
   }
 
   removeNews(id: number) {
-    return this.http.delete<any>(AppConfig.ENDPOINT_NEWS + '/' + id, this.options);
+    return this.http.delete<any>(AppConfig.ENDPOINT_NEWS + '/' + id, this.getOptions());
   }
 
   updateNews(news: NewsRequest, id: string) {
-    return this.http.patch<News>(AppConfig.ENDPOINT_NEWS + '/' + id, news, this.options);
+    return this.http.patch<News>(AppConfig.ENDPOINT_NEWS + '/' + id, news, this.getOptions());
   }
 
   addComment(comment: CommentRequest) {
-    return this.http.post<Comment>(AppConfig.ENDPOINT_COMMENT, comment, this.options);
+    return this.http.post<Comment>(AppConfig.ENDPOINT_COMMENT, comment, this.getOptions());
   }
 
   removeComment(id: number) {
-    return this.http.delete<any>(AppConfig.ENDPOINT_COMMENT + '/' + id, this.options);
+    return this.http.delete<any>(AppConfig.ENDPOINT_COMMENT + '/' + id, this.getOptions());
+  }
+
+  private getOptions() {
+    const token = localStorage.getItem('token');
+    return token ? {headers: this.options.headers.append('Authorization', 'Bearer ' + JSON.parse(token).token)} : this.options;
   }
 
 }
