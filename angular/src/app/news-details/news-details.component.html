@@ -6,6 +6,10 @@
   </div>
   <p class="mb-1">{{news && news.description}}</p>
 </div>
+<div class="text-right">
+  <button class="btn btn-primary mr-2" (click)="edit(news); $event.stopPropagation()">Edit</button>
+  <button class="btn btn-danger" (click)="remove(news); $event.stopPropagation()">Remove</button>
+</div>
 
 <div class="pb-2" *ngIf="!error">
   <h5 class="font-weight-bold">Comments ({{news && news.comments ? news.comments.length : 0}}):</h5>

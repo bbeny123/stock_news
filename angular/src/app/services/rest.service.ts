@@ -44,6 +44,10 @@ export class RESTService {
     return this.http.post<News>(AppConfig.ENDPOINT_NEWS, news, this.options);
   }
 
+  removeNews(id: number) {
+    return this.http.delete<any>(AppConfig.ENDPOINT_NEWS + '/' + id, this.options);
+  }
+
   updateNews(news: NewsRequest, id: string) {
     return this.http.patch<News>(AppConfig.ENDPOINT_NEWS + '/' + id, news, this.options);
   }

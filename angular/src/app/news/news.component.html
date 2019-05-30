@@ -6,6 +6,10 @@
       <a class="text-secondary col-auto mr-auto" [href]="news.link" (click)="$event.stopPropagation()">{{news.link | shortUrl}}</a>
     </div>
     <p class="mb-1">{{news.description}}</p>
+    <div *ngIf="authService.isOwner(news.userId)" class="text-right">
+      <button class="btn btn-primary mr-2" (click)="edit(news); $event.stopPropagation()">Edit</button>
+      <button class="btn btn-danger" (click)="remove(news); $event.stopPropagation()">Remove</button>
+    </div>
   </div>
 </div>
 <div class="container align-self-center">

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {News} from '../model/news';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RESTService} from "../services/rest.service";
 import {AlertService} from "../services/alert.service";
 import {AuthService} from "../services/auth.service";
@@ -18,7 +18,7 @@ export class NewsDetailsComponent implements OnInit {
   news: News;
   cmtForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private restService: RESTService, private alertService: AlertService, private authService: AuthService, private formBuilder: FormBuilder) {  }
+  constructor(private route: ActivatedRoute, private restService: RESTService, private alertService: AlertService, private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {  }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -39,9 +39,26 @@ export class NewsDetailsComponent implements OnInit {
       return;
     }
 
+    this.alertService.closeAlert();
+
     this.restService.addComment(this.cmtForm.value).subscribe(r => {
         this.cmtForm.reset({newsId: this.id});
         this.news.comments.push(r)
+      },
+      err => this.alertService.warning(err.error.message)
+    );
+  }
+
+  edit(news: News) {
+    this.alertService.closeAlert();
+    this.router.navigate(['/edit/' + news.id]);
+  }
+
+  remove(news: News) {
+    this.alertService.closeAlert();
+    this.restService.removeNews(news.id).subscribe(() => {
+        this.alertService.success('The news has been removed');
+        this.router.navigate(['/']);
       },
       err => this.alertService.warning(err.error.message)
     );

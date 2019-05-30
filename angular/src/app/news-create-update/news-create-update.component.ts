@@ -8,10 +8,10 @@ import {News} from "../model/news";
 
 @Component({
   selector: 'app-news-create',
-  templateUrl: './news-create.component.html',
-  styleUrls: ['./news-create.component.styl']
+  templateUrl: './news-create-update.component.html',
+  styleUrls: ['./news-create-update.component.styl']
 })
-export class NewsCreateComponent implements OnInit {
+export class NewsCreateUpdateComponent implements OnInit {
 
   id: string;
   news: News;
@@ -53,5 +53,6 @@ export class NewsCreateComponent implements OnInit {
   reset() {
     this.newsForm.patchValue(this.news);
   }
+
 
 }
