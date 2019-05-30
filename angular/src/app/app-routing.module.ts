@@ -11,7 +11,11 @@ const routes: Routes = [
   {
     path: 'register/activate',
     component: ResendComponent
-  }
+  },
+  // {
+  //   path: '**',
+  //   component: PageNotFoundComponent
+  // }
 ];
 
 @NgModule({

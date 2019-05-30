@@ -13,13 +13,15 @@ import {NgBusyModule} from "ng-busy";
 import {ResendComponent} from './resend/resend.component';
 import {ShortUrlPipe} from './util/short-url.pipe';
 import {NewsComponent} from './news/news.component';
+import {NewsDetailsComponent} from './news-details/news-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ResendComponent,
     ShortUrlPipe,
-    NewsComponent
+    NewsComponent,
+    NewsDetailsComponent
   ],
   imports: [
     BrowserModule,
