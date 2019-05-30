@@ -5,6 +5,7 @@ import {NewsList} from '../model/news-list';
 import {News} from "../model/news";
 import {CommentRequest} from "../model/comment-request";
 import {Comment} from "../model/comment";
+import {NewsRequest} from "../model/news-request";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class RESTService {
   private options = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': this.token && 'Bearer ' + JSON.parse(this.token).token
+        'Authorization': this.token != null ? 'Bearer ' + JSON.parse(this.token).token : ''
       }
     )
   };
@@ -33,6 +34,10 @@ export class RESTService {
 
   getNews(id: string) {
     return this.http.get<News>(AppConfig.ENDPOINT_NEWS + "/" + id, this.options);
+  }
+
+  createNews(news: NewsRequest) {
+    return this.http.post<News>(AppConfig.ENDPOINT_NEWS, news, this.options);
   }
 
   addComment(comment: CommentRequest) {

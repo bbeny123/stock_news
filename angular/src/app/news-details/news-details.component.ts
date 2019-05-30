@@ -40,11 +40,11 @@ export class NewsDetailsComponent implements OnInit {
     }
 
     this.restService.addComment(this.cmtForm.value).subscribe(r => {
-      this.cmtForm.reset({newsId: this.id});
-      this.news.comments.push(r)
+        this.cmtForm.reset({newsId: this.id});
+        this.news.comments.push(r)
       },
-      err => this.alertService.warning(err.error.message));
-    console.log(this.cmtForm.value);
+      err => this.alertService.warning(err.error.message)
+    );
   }
 
 }

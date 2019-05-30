@@ -8,7 +8,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
+      <ul *ngIf="authService.isAdmin()" class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/create" routerLinkActive="active" (click)="isNavbarCollapsed = true">Add News</a>
         </li>

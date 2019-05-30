@@ -14,6 +14,8 @@ import {ResendComponent} from './resend/resend.component';
 import {ShortUrlPipe} from './util/short-url.pipe';
 import {NewsComponent} from './news/news.component';
 import {NewsDetailsComponent} from './news-details/news-details.component';
+import { NewsCreateComponent } from './news-create/news-create.component';
+import {AuthAdminGuard} from "./services/auth-admin.guard";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import {NewsDetailsComponent} from './news-details/news-details.component';
     ResendComponent,
     ShortUrlPipe,
     NewsComponent,
-    NewsDetailsComponent
+    NewsDetailsComponent,
+    NewsCreateComponent
   ],
   imports: [
     BrowserModule,

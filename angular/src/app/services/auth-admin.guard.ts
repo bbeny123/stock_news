@@ -9,7 +9,8 @@ export class AuthAdminGuard implements CanActivate {
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(): boolean {
+    console.warn('a');
     if (this.authService.isAdmin()) {
       return true;
     }

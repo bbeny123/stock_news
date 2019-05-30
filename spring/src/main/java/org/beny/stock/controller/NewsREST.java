@@ -6,6 +6,7 @@ import org.beny.stock.dto.news.NewsRequest;
 import org.beny.stock.repository.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class NewsREST extends BaseREST {
 
     @GetMapping("/news")
     public ResponseEntity<?> getNewsList(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) throws RuntimeException {
-        return ok(NewsList.of(repository.findAll(PageRequest.of(page, size))));
+        return ok(NewsList.of(repository.findAll(PageRequest.of(page, size, Sort.by("date").descending()))));
     }
 
     @GetMapping("/news/{id}")

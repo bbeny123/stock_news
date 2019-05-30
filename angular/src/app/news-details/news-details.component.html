@@ -24,7 +24,7 @@
   <form class="" *ngIf="authService.loggedIn()" [formGroup]="cmtForm" (ngSubmit)="addComment()">
     <div class="form-group">
       <label class="font-weight-bold" for="comment">Comment:</label>
-      <textarea class="border new rounded-sm shadow p-3 mb-4 form-control" id="comment" formControlName="content" rows="1" placeholder="What are your thoughts?"></textarea>
+      <textarea class="border new rounded-sm shadow p-3 mb-4 form-control" id="comment" formControlName="content" rows="1" placeholder="What are your thoughts?" required maxlength="600"></textarea>
     </div>
     <button type="submit" class="btn btn-primary mb-3 float-right" [disabled]="cmtForm.invalid">Comment</button>
   </form>
