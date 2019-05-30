@@ -24,7 +24,6 @@ public class UserRequest {
     @Length(max = 120)
     private String name;
 
-    @NotEmpty
     private String captchaResponse;
 
     public String getLogin() {

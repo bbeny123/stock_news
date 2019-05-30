@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
 
         user.setPassword(encoder.encode(user.getPassword()));
         user.setType(User.Type.USER);
-        user.setActive(false);
+        user.setActive(!mailService.isEnabled());
         user.setStringToken(randomUUID().toString());
         user = repository.save(user);
 

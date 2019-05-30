@@ -38,5 +38,5 @@ captcha:
   site:
 registration:
   mail:
-    enable: true
+    enable: false
     url: http://localhost:4200/register/activate?token=

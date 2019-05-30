@@ -5,7 +5,7 @@
     <a class="text-secondary col-auto mr-auto" [href]="news && news.link">{{news && news.link | shortUrl}}</a>
   </div>
   <p class="mb-1">{{news && news.description}}</p>
-  <div *ngIf="authService.isOwner(news.userId)" class="text-right">
+  <div *ngIf="authService.isOwner(news && news.userId)" class="text-right">
     <button class="btn btn-primary mr-2" (click)="edit(news)">Edit</button>
     <button class="btn btn-danger" (click)="remove(news)">Remove</button>
   </div>
@@ -15,14 +15,14 @@
   <h5 class="font-weight-bold">Comments ({{news && news.comments ? news.comments.length : 0}}):</h5>
 
   <div class="" *ngFor="let cmt of news && news.comments">
-    <div *ngIf="authService.isOwner(cmt.id)" class="border rounded-sm shadow p-3 mb-4 owner">
+    <div *ngIf="authService.isOwner(cmt.userId)" class="border rounded-sm shadow p-3 mb-4 owner">
       <p class="text-secondary mb-1">@{{cmt.user}}:</p>
       <p class="mb-1">{{cmt.content}}</p>
       <div class="text-right">
         <button class="btn btn-danger" (click)="removeComment(cmt)">Remove</button>
       </div>
     </div>
-    <div *ngIf="!authService.isOwner(cmt.id)" class="border rounded-sm shadow p-3 mb-4">
+    <div *ngIf="!authService.isOwner(cmt.userId)" class="border rounded-sm shadow p-3 mb-4">
       <p class="text-secondary mb-1">@{{cmt.user}}:</p>
       <p class="mb-1">{{cmt.content}}</p>
     </div>

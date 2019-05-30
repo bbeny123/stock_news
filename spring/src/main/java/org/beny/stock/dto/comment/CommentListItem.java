@@ -44,6 +44,14 @@ public class CommentListItem {
         this.user = user;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public static CommentListItem of(Comment comment) {
         CommentListItem item = new CommentListItem();
         item.id = comment.getId();

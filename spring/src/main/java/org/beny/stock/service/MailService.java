@@ -30,4 +30,7 @@ public class MailService {
         }
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
 }
