@@ -12,12 +12,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgBusyModule} from "ng-busy";
 import {ResendComponent} from './resend/resend.component';
 import {ShortUrlPipe} from './util/short-url.pipe';
+import {NewsComponent} from './news/news.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ResendComponent,
-    ShortUrlPipe
+    ShortUrlPipe,
+    NewsComponent
   ],
   imports: [
     BrowserModule,

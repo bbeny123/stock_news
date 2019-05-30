@@ -7,5 +7,6 @@ export class AppConfig {
   public static ENDPOINT_REGISTRATION = AppConfig.ENDPOINT_API + '/rest/register';
   public static ENDPOINT_RESEND = AppConfig.ENDPOINT_API + '/rest/register/resend';
   public static ENDPOINT_ACTIVATE = AppConfig.ENDPOINT_API + '/rest/register/activate';
+  public static ENDPOINT_NEWS = AppConfig.ENDPOINT_API + '/rest/news';
 
 }

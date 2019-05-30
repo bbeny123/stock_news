@@ -87,7 +87,7 @@
   </div>
 </nav>
 
-<div class="centered mt-2">
+<div class="container-fluid centered mt-2">
   <ngb-alert *ngIf="alertService.alert" [type]="alertService.alert.type" (close)="alertService.closeAlert()">{{ alertService.alert.message }}</ngb-alert>
   <router-outlet></router-outlet>
 </div>

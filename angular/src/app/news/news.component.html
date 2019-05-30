@@ -1,0 +1,13 @@
+<div class="" *ngFor="let news of newses">
+  <div class="border rounded-sm shadow p-3 mb-4 news" (click)="select(news)">
+    <h4 class="font-weight-bold">{{news.title}}!</h4>
+    <div class="row">
+      <p class="text-secondary col-auto mr-0 mb-1">@{{news.user}}</p>
+      <a class="text-secondary col-auto mr-auto" [href]="news.link">{{news.link | shortUrl}}</a>
+    </div>
+    <p class="mb-1">{{news.description}}</p>
+  </div>
+</div>
+<div class="container align-self-center">
+  <ngb-pagination class="d-flex justify-content-center" [(page)]="page" [collectionSize]="size" (pageChange)="pageChange()"></ngb-pagination>
+</div>
