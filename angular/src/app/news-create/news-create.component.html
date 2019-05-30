@@ -11,5 +11,6 @@
     <label for="description">Description</label>
     <textarea class="form-control" id="description" formControlName="description" rows="2" placeholder="Description" maxlength="300" required></textarea>
   </div>
-  <button type="submit" class="btn btn-primary mb-3 float-right" [disabled]="newsForm.invalid">Create</button>
+  <button type="submit" class="btn btn-primary mb-3 float-right ml-2" [disabled]="newsForm.invalid">{{id ? 'Save' : 'Create'}}</button>
+  <p *ngIf="id" class="btn btn-primary mb-3 float-right reset-btn" (click)="reset()">Reset</p>
 </form>

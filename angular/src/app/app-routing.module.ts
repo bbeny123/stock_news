@@ -25,6 +25,11 @@ const routes: Routes = [
     canActivate: [AuthAdminGuard]
   },
   {
+    path: 'edit/:id',
+    component: NewsCreateComponent,
+    canActivate: [AuthAdminGuard]
+  },
+  {
     path: '**',
     redirectTo: ''
   }

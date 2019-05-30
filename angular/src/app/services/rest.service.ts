@@ -36,8 +36,16 @@ export class RESTService {
     return this.http.get<News>(AppConfig.ENDPOINT_NEWS + "/" + id, this.options);
   }
 
+  createOrUpdateNews(news: NewsRequest, id?: string) {
+    return id ? this.updateNews(news, id) : this.createNews(news);
+  }
+
   createNews(news: NewsRequest) {
     return this.http.post<News>(AppConfig.ENDPOINT_NEWS, news, this.options);
+  }
+
+  updateNews(news: NewsRequest, id: string) {
+    return this.http.patch<News>(AppConfig.ENDPOINT_NEWS + '/' + id, news, this.options);
   }
 
   addComment(comment: CommentRequest) {
