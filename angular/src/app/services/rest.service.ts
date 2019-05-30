@@ -56,4 +56,8 @@ export class RESTService {
     return this.http.post<Comment>(AppConfig.ENDPOINT_COMMENT, comment, this.options);
   }
 
+  removeComment(id: number) {
+    return this.http.delete<any>(AppConfig.ENDPOINT_COMMENT + '/' + id, this.options);
+  }
+
 }

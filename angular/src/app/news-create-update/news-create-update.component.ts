@@ -43,6 +43,8 @@ export class NewsCreateUpdateComponent implements OnInit {
       return;
     }
 
+    this.alertService.closeAlert();
+
     this.restService.createOrUpdateNews(this.newsForm.value, this.id).subscribe(r => {
         this.router.navigate(['/news/' + r.id]);
       },

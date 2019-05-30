@@ -5,6 +5,7 @@ import {RESTService} from "../services/rest.service";
 import {AlertService} from "../services/alert.service";
 import {AuthService} from "../services/auth.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Comment} from "../model/comment";
 
 @Component({
   selector: 'app-news-details',
@@ -59,6 +60,15 @@ export class NewsDetailsComponent implements OnInit {
     this.restService.removeNews(news.id).subscribe(() => {
         this.alertService.success('The news has been removed');
         this.router.navigate(['/']);
+      },
+      err => this.alertService.warning(err.error.message)
+    );
+  }
+
+  removeComment(comment: Comment) {
+    this.alertService.closeAlert();
+    this.restService.removeComment(comment.id).subscribe(() => {
+        this.news.comments.splice(this.news.comments.indexOf(comment), 1);
       },
       err => this.alertService.warning(err.error.message)
     );

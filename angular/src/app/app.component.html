@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark static-top bg-dark">
   <div class="container-fluid centered">
-    <a class="navbar-brand" routerLink="/" (click)="isNavbarCollapsed = true">
+    <a class="navbar-brand" routerLink="/" (click)="isNavbarCollapsed = true; alertService.closeAlert();">
       <img src="/assets/logo.png" width="30" height="30" alt="Stock News">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -10,7 +10,7 @@
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarCollapse">
       <ul *ngIf="authService.isAdmin()" class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/create" routerLinkActive="active" (click)="isNavbarCollapsed = true">Add News</a>
+          <a class="nav-link" routerLink="/create" routerLinkActive="active" (click)="isNavbarCollapsed = true; alertService.closeAlert();">Add News</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto" [ngSwitch]="authService.loggedIn()">

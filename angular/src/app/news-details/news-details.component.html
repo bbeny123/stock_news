@@ -5,10 +5,10 @@
     <a class="text-secondary col-auto mr-auto" [href]="news && news.link">{{news && news.link | shortUrl}}</a>
   </div>
   <p class="mb-1">{{news && news.description}}</p>
-</div>
-<div class="text-right">
-  <button class="btn btn-primary mr-2" (click)="edit(news); $event.stopPropagation()">Edit</button>
-  <button class="btn btn-danger" (click)="remove(news); $event.stopPropagation()">Remove</button>
+  <div class="text-right">
+    <button class="btn btn-primary mr-2" (click)="edit(news)">Edit</button>
+    <button class="btn btn-danger" (click)="remove(news)">Remove</button>
+  </div>
 </div>
 
 <div class="pb-2" *ngIf="!error">
@@ -18,6 +18,9 @@
     <div *ngIf="authService.isOwner(cmt.id)" class="border rounded-sm shadow p-3 mb-4 owner">
       <p class="text-secondary mb-1">@{{cmt.user}}:</p>
       <p class="mb-1">{{cmt.content}}</p>
+      <div class="text-right">
+        <button class="btn btn-danger" (click)="removeComment(cmt)">Remove</button>
+      </div>
     </div>
     <div *ngIf="!authService.isOwner(cmt.id)" class="border rounded-sm shadow p-3 mb-4">
       <p class="text-secondary mb-1">@{{cmt.user}}:</p>
